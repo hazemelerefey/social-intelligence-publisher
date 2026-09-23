@@ -7,14 +7,14 @@
     "fabricated_data": false
   },
   "execution": {
-    "id": "5",
+    "id": "8",
     "workflow_id": "b85715b1-f6f9-4da1-8852-0c732e4c4c3c",
     "workflow_name": "Social Intelligence Publisher",
     "status": "success",
     "mode": "manual",
-    "started_at": "2026-09-23T04:28:20.168Z",
-    "stopped_at": "2026-09-23T04:28:37.290Z",
-    "duration_ms": 17122
+    "started_at": "2026-09-23T10:41:23.135Z",
+    "stopped_at": "2026-09-23T10:41:45.925Z",
+    "duration_ms": 22790
   },
   "sources": {
     "counts": {
@@ -67,20 +67,20 @@
       {
         "title": "We All Have a \"Serious Work\" AI and a \"Just Vibing\" AI. When Did That Happen?",
         "url": "https://dev.to/dj29/we-all-have-a-serious-work-ai-and-a-just-vibing-ai-when-did-that-happen-5fl2",
-        "reactions": 35,
-        "comments": 15
+        "reactions": 39,
+        "comments": 17
+      },
+      {
+        "title": "Two Weeks In: A 15-Year QA Veteran, Back to Being the New Guy",
+        "url": "https://dev.to/xulingfeng/two-weeks-in-a-15-year-qa-veteran-back-to-being-the-new-guy-39g3",
+        "reactions": 75,
+        "comments": 53
       },
       {
         "title": "What If Your AI Agent Never Had to Leave the Browser? (Demo 🚀)",
         "url": "https://dev.to/sylwia-lask/what-if-your-ai-agent-never-had-to-leave-the-browser-demo--5g",
-        "reactions": 95,
-        "comments": 64
-      },
-      {
-        "title": "The swarm that kept coming back",
-        "url": "https://dev.to/hiper2d/the-swarm-that-kept-coming-back-7ie",
-        "reactions": 16,
-        "comments": 5
+        "reactions": 101,
+        "comments": 75
       }
     ]
   },
@@ -138,57 +138,57 @@
     "topic_selection": {
       "model": "openai/gpt-4.1-mini",
       "provider": "OpenAI",
-      "prompt_tokens": 1360,
-      "completion_tokens": 246,
-      "cost_usd": 0.0009376
+      "prompt_tokens": 1386,
+      "completion_tokens": 256,
+      "cost_usd": 0.0006184
     },
     "content_generation": {
       "model": "openai/gpt-4.1-mini",
       "provider": "OpenAI",
-      "prompt_tokens": 650,
-      "completion_tokens": 573,
-      "cost_usd": 0.0011768
+      "prompt_tokens": 660,
+      "completion_tokens": 631,
+      "cost_usd": 0.0012736
     },
-    "total_cost_usd": 0.0021144
+    "total_cost_usd": 0.001892
   },
   "final_output": {
-    "run_timestamp": "2026-09-23T04:28:30.343Z",
+    "run_timestamp": "2026-09-23T10:41:35.809Z",
     "topic": "N8n – Flexible AI workflow automation for technical teams",
     "angle": "workflow جاهز يوفر وقتاً أو كوداً",
     "source": "hackernews:ai-automation",
     "source_url": "https://n8n.io/",
     "source_score": 64.1,
-    "why_this_topic": "n8n تقدم أتمتة ووركفلو مرنة تناسب الفرق التقنية، وهي أداة عملية يمكن للمؤسسين والفريلانسرز استخدامها لتوفير وقت في الشغل اليومي بدون تعقيد.",
+    "why_this_topic": "n8n تقدم أتمتة ووركفلو مرنة ومفتوحة المصدر تساعد المؤسسين والفريلانسرز على توفير وقت وجهد في مهامهم اليومية بسهولة وبدون تعقيد برمجي كبير.",
     "proof_points": [
-      "أتمتة ووركفلو بدون كود مع دعم AI",
-      "مرونة في الربط مع أدوات متعددة",
-      "توفير وقت وجهد في المهام المتكررة",
-      "مناسبة للمؤسسين والفريلانسرز الذين يريدون أتمتة عملية",
-      "مفتوحة المصدر مع مجتمع نشط"
+      "n8n أداة مفتوحة المصدر وقابلة للتخصيص",
+      "تدعم دمج AI بسهولة في الأتمتة",
+      "تساعد على تقليل الوقت المهدر في المهام اليدوية",
+      "تقدم واجهة سهلة الاستخدام للمستخدمين التقنيين وغير التقنيين",
+      "تدعم بناء ووركفلو متكامل بدون كود معقد"
     ],
-    "hook_ar": "هل تبحث عن أتمتة ووركفلو بدون تعقيد برمجي؟ n8n توفر لك الحل!",
-    "explainer_ar": "n8n هي أداة مفتوحة المصدر تتيح للفرق التقنية وأصحاب المشاريع أتمتة المهام اليومية بسهولة، مع دعم للذكاء الاصطناعي وربط سلس مع أدوات متعددة.",
+    "hook_ar": "وفر وقتك مع n8n: أتمتة ووركفلو مرنة ومفتوحة المصدر بدون تعقيد برمجي.",
+    "explainer_ar": "n8n تتيح لك بناء ووركفلو متكامل يدعم دمج AI بسهولة، مما يقلل الوقت المهدر في المهام اليدوية ويزيد إنتاجيتك.",
     "bullets_ar": [
-      "أتمتة ووركفلو بدون الحاجة لكتابة كود مع دعم AI",
-      "مرونة في الربط مع أكثر من 200 تطبيق وأداة",
-      "توفير الوقت والجهد في المهام المتكررة",
-      "مناسبة للمؤسسين والفريلانسرز الباحثين عن حلول عملية",
-      "مجتمع نشط يدعم التطوير المستمر للأداة"
+      "أداة مفتوحة المصدر وقابلة للتخصيص بالكامل",
+      "تدعم دمج الذكاء الاصطناعي في الأتمتة بسلاسة",
+      "واجهة سهلة الاستخدام للمستخدمين التقنيين وغير التقنيين",
+      "تساعد على تقليل الوقت المهدر في المهام الروتينية",
+      "تمكنك من بناء ووركفلو بدون الحاجة لكود معقد"
     ],
-    "cta_ar": "الرابط في أول تعليق 👇",
-    "facebook_post": "هل تبحث عن أتمتة ووركفلو بدون تعقيد برمجي؟ n8n توفر لك الحل! هذه الأداة المفتوحة المصدر تتيح للفرق التقنية وأصحاب المشاريع أتمتة المهام اليومية بسهولة، مع دعم للذكاء الاصطناعي وربط سلس مع أدوات متعددة. \n\n• أتمتة بدون كود مع دعم AI\n• ربط أكثر من 200 تطبيق\n• توفير وقت وجهد في المهام المتكررة\n• مناسبة للمؤسسين والفريلانسرز\n• مجتمع نشط يدعم التطوير\n\nالرابط في أول تعليق 👇",
-    "facebook_first_comment": "تعرف أكثر على n8n وأتمتة ووركفلو بسهولة من المصدر الرسمي:\nhttps://n8n.io/",
-    "x_post": "n8n تتيح أتمتة ووركفلو بدون كود مع دعم AI، مناسبة للمؤسسين والفريلانسرز لتوفير الوقت وربط أكثر من 200 أداة بسهولة. أداة مفتوحة المصدر ومرنة. #أتمتة #تقنية #n8n #ذكاء_اصطناعي",
+    "cta_ar": "جرب n8n الآن وابدأ أتمتة مهامك اليومية بسرعة وسهولة. الرابط في أول تعليق 👇",
+    "facebook_post": "وفر وقتك مع n8n: أتمتة ووركفلو مرنة ومفتوحة المصدر بدون تعقيد برمجي. n8n تتيح لك بناء ووركفلو متكامل يدعم دمج AI بسهولة، مما يقلل الوقت المهدر في المهام اليدوية ويزيد إنتاجيتك.\n\n- أداة مفتوحة المصدر وقابلة للتخصيص بالكامل\n- تدعم دمج الذكاء الاصطناعي في الأتمتة بسلاسة\n- واجهة سهلة الاستخدام للمستخدمين التقنيين وغير التقنيين\n- تساعد على تقليل الوقت المهدر في المهام الروتينية\n- تمكنك من بناء ووركفلو بدون الحاجة لكود معقد\n\nجرب n8n الآن وابدأ أتمتة مهامك اليومية بسرعة وسهولة. الرابط في أول تعليق 👇",
+    "facebook_first_comment": "المصدر: n8n - أتمتة ووركفلو مرنة ومفتوحة المصدر\nhttps://n8n.io/",
+    "x_post": "n8n أداة مفتوحة المصدر لأتمتة ووركفلو مع دعم AI، تساعدك على تقليل الوقت المهدر في المهام اليدوية بسهولة وبدون كود معقد. جربها الآن!",
     "hashtags": [
       "#أتمتة",
-      "#تقنية",
-      "#n8n",
       "#ذكاء_اصطناعي",
-      "#فريلانسر",
-      "#تطوير_برمجيات"
+      "#n8n",
+      "#تطوير_برمجيات",
+      "#إنتاجية",
+      "#تقنية"
     ],
-    "image_prompt": "تصميم بطاقة مربعة نظيفة تعرض شعار n8n مع رموز تمثل الأتمتة والذكاء الاصطناعي، وخطوط متصلة توضح الربط بين أدوات متعددة، بألوان هادئة وعصرية",
-    "reuse_note": "يمكن إعادة استخدام هذا المحتوى لتسليط الضوء على أدوات أتمتة أخرى مشابهة مع تعديل النقاط التقنية حسب الأداة",
+    "image_prompt": "تصميم بطاقة مربعة نظيفة تظهر شعار n8n مع أيقونات تمثل الأتمتة والذكاء الاصطناعي، وخطوط متصلة تمثل سير العمل، بألوان هادئة وعصرية.",
+    "reuse_note": "محتوى مخصص لشرح أداة n8n مع التركيز على أتمتة ووركفلو باستخدام AI للمستخدمين التقنيين.",
     "status": "draft_ready",
     "platform_mode": {
       "facebook": "ready_for_api_publish_plus_comment",
@@ -198,8 +198,9 @@
   "facebook_publish": {
     "page_name": "AZAR",
     "page_id": "177929742707287",
-    "post_id": "177929742707287_1412711677654371",
-    "comment_id": "1412711677654371_1606413680975025",
+    "post_id": "177929742707287_1412926720966200",
+    "comment_id": "1412926720966200_2178795069649844",
+    "permalink_url": "https://www.facebook.com/1412927604299445/posts/1412926720966200",
     "publish_status": "published",
     "comment_status": "comment_published"
   },
@@ -213,97 +214,97 @@
     {
       "node": "Brand Profile & Rules",
       "status": "success",
-      "duration_ms": 4,
+      "duration_ms": 2,
       "disabled_during_test": false
     },
     {
       "node": "Angle Library",
       "status": "success",
-      "duration_ms": 2,
+      "duration_ms": 1,
       "disabled_during_test": false
     },
     {
       "node": "Fetch HN AI Automation",
       "status": "success",
-      "duration_ms": 684,
+      "duration_ms": 623,
       "disabled_during_test": false
     },
     {
       "node": "Fetch HN OpenAI Agents",
       "status": "success",
-      "duration_ms": 684,
+      "duration_ms": 613,
       "disabled_during_test": false
     },
     {
       "node": "Fetch Dev.to AI",
       "status": "success",
-      "duration_ms": 586,
+      "duration_ms": 362,
       "disabled_during_test": false
     },
     {
       "node": "Normalize & Score Topics",
       "status": "success",
-      "duration_ms": 87,
+      "duration_ms": 52,
       "disabled_during_test": false
     },
     {
       "node": "OpenAI Topic Selector",
       "status": "success",
-      "duration_ms": 2757,
+      "duration_ms": 3557,
       "disabled_during_test": false
     },
     {
       "node": "OpenAI Content Pack",
       "status": "success",
-      "duration_ms": 5259,
+      "duration_ms": 7364,
       "disabled_during_test": false
     },
     {
       "node": "Parse Draft Pack",
       "status": "success",
-      "duration_ms": 52,
+      "duration_ms": 37,
       "disabled_during_test": false
     },
     {
       "node": "Final Draft Output",
       "status": "success",
-      "duration_ms": 34,
+      "duration_ms": 42,
       "disabled_during_test": false
     },
     {
       "node": "Resolve Facebook Pages",
       "status": "success",
-      "duration_ms": 650,
+      "duration_ms": 420,
       "disabled_during_test": false
     },
     {
       "node": "Prepare Facebook Post",
       "status": "success",
-      "duration_ms": 46,
+      "duration_ms": 30,
       "disabled_during_test": false
     },
     {
       "node": "Post to Facebook Page",
       "status": "success",
-      "duration_ms": 2494,
+      "duration_ms": 3054,
       "disabled_during_test": false
     },
     {
       "node": "Prepare Facebook First Comment",
       "status": "success",
-      "duration_ms": 59,
+      "duration_ms": 26,
       "disabled_during_test": false
     },
     {
       "node": "Post Facebook First Comment",
       "status": "success",
-      "duration_ms": 3607,
+      "duration_ms": 6473,
       "disabled_during_test": false
     },
     {
       "node": "Facebook Publish Result",
       "status": "success",
-      "duration_ms": 43,
+      "duration_ms": 57,
       "disabled_during_test": false
     }
   ],
@@ -311,6 +312,9 @@
     "embedded_api_keys": false,
     "embedded_meta_tokens": false,
     "openrouter_auth": "n8n encrypted Header Auth credential (not exported)",
-    "meta_auth": "n8n encrypted Query Auth credential (not exported)"
+    "meta_auth": "n8n encrypted Query Auth credential (not exported)",
+    "meta_token_type": "PAGE",
+    "meta_token_valid": true,
+    "meta_token_expires_at": 0
   }
 }

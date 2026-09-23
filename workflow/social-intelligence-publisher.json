@@ -191,7 +191,7 @@
     },
     {
       "parameters": {
-        "url": "https://graph.facebook.com/v25.0/me/accounts?fields=id%2Cname%2Caccess_token%2Ctasks",
+        "url": "https://graph.facebook.com/v25.0/me?fields=id%2Cname",
         "options": {},
         "authentication": "genericCredentialType",
         "genericAuthType": "httpQueryAuth"
@@ -211,7 +211,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const response = $json || {};\nconst draft = $('Final Draft Output').first().json || {};\nconst pageNameTarget = 'AZAR';\nconst pageIdTarget = '177929742707287';\n\nconst pages = Array.isArray(response.data) ? response.data : [];\nconst page = pages.find((item) => String(item.id || '') === pageIdTarget)\n  || pages.find((item) => String(item.name || '').trim().toLowerCase() === pageNameTarget.toLowerCase())\n  || {};\n\nif (!page.id) {\n  throw new Error('The configured Facebook Page was not returned by Meta.');\n}\nif (!page.access_token) {\n  throw new Error('Meta did not return a Page access token. Check the n8n Meta credential and Page permissions.');\n}\n\nreturn [{ json: {\n  ...draft,\n  page_id: page.id,\n  page_name: page.name || pageNameTarget,\n  page_access_token: page.access_token,\n  page_tasks: page.tasks || [],\n  publish_message: draft.facebook_post || '',\n  publish_mode: 'facebook_page_feed'\n} }];"
+        "jsCode": "const page = $json || {};\nconst draft = $('Final Draft Output').first().json || {};\nconst pageNameTarget = 'AZAR';\nconst pageIdTarget = '177929742707287';\n\nif (String(page.id || '') !== pageIdTarget) {\n  throw new Error('The Meta credential does not resolve to the configured AZAR Page.');\n}\n\nreturn [{ json: {\n  ...draft,\n  page_id: page.id,\n  page_name: page.name || pageNameTarget,\n  page_tasks: page.tasks || [],\n  publish_message: draft.facebook_post || '',\n  publish_mode: 'facebook_page_feed'\n} }];"
       },
       "id": "prepare-facebook-post",
       "name": "Prepare Facebook Post",
@@ -234,14 +234,12 @@
             {
               "name": "message",
               "value": "={{$json.publish_message || \"\"}}"
-            },
-            {
-              "name": "access_token",
-              "value": "={{$json.page_access_token || \"\"}}"
             }
           ]
         },
-        "options": {}
+        "options": {},
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpQueryAuth"
       },
       "id": "post-to-facebook-page",
       "name": "Post to Facebook Page",
@@ -295,14 +293,12 @@
             {
               "name": "message",
               "value": "={{$json.facebook_first_comment || \"\"}}"
-            },
-            {
-              "name": "access_token",
-              "value": "={{$json.page_access_token || \"\"}}"
             }
           ]
         },
-        "options": {}
+        "options": {},
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpQueryAuth"
       },
       "id": "post-facebook-first-comment",
       "name": "Post Facebook First Comment",
@@ -509,41 +505,41 @@
     {
       "id": "7b3aa061-8ee3-4ac5-bdd2-19edf7157797",
       "name": "01 / Control",
-      "nodeIds": [
-        "brand-profile",
-        "angle-library"
+      "nodeNames": [
+        "Brand Profile & Rules",
+        "Angle Library"
       ]
     },
     {
       "id": "9c47c8d6-b242-464d-a015-c8037a9210b7",
       "name": "02 / Discover",
-      "nodeIds": [
-        "fetch-hn-ai-automation",
-        "fetch-hn-openai-agents",
-        "fetch-devto-ai",
-        "normalize-score-topics"
+      "nodeNames": [
+        "Fetch HN AI Automation",
+        "Fetch HN OpenAI Agents",
+        "Fetch Dev.to AI",
+        "Normalize & Score Topics"
       ]
     },
     {
       "id": "44a7694e-7d73-4987-b938-3ee45aa0644d",
       "name": "03 / Compose",
-      "nodeIds": [
-        "openai-topic-selector",
-        "openai-content-pack",
-        "parse-draft-pack",
-        "final-draft-output"
+      "nodeNames": [
+        "OpenAI Topic Selector",
+        "OpenAI Content Pack",
+        "Parse Draft Pack",
+        "Final Draft Output"
       ]
     },
     {
       "id": "2f06e5ff-6497-436a-9970-33e92f8a51a7",
       "name": "04 / Release",
-      "nodeIds": [
-        "resolve-facebook-pages",
-        "prepare-facebook-post",
-        "post-to-facebook-page",
-        "prepare-facebook-first-comment",
-        "post-facebook-first-comment",
-        "facebook-publish-result"
+      "nodeNames": [
+        "Resolve Facebook Pages",
+        "Prepare Facebook Post",
+        "Post to Facebook Page",
+        "Prepare Facebook First Comment",
+        "Post Facebook First Comment",
+        "Facebook Publish Result"
       ]
     }
   ],

@@ -15,4 +15,4 @@ If you find a credential or security issue, contact the repository owner private
 
 ## Current release-stage status
 
-The workflow export contains no embedded token. The live n8n workflow uses an encrypted Meta Query Auth credential for the AZAR Page; the portable export deliberately omits that credential.
+The workflow export contains no embedded token. The live n8n workflow uses an encrypted, non-expiring Meta Page token (`expires_at: 0`) through Query Auth; the portable export deliberately omits that credential.

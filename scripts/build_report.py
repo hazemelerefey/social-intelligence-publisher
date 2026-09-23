@@ -102,7 +102,7 @@ def build():
     pdf.set_x(14)
     pdf.set_font('DejaVu', '', 8.5)
     pdf.set_text_color(203, 213, 225)
-    pdf.cell(0, 6, 'Generated from n8n execution ID 5  |  23 September 2026', new_x=XPos.LMARGIN, new_y=YPos.NEXT)
+    pdf.cell(0, 6, 'Generated from n8n execution ID 8  |  23 September 2026', new_x=XPos.LMARGIN, new_y=YPos.NEXT)
 
     pdf.set_y(94)
     pdf.section('Verified outcome')
@@ -133,8 +133,8 @@ def build():
     pdf.multi_cell(
         180, 4.5,
         f"AZAR Page post {data['facebook_publish']['post_id']} and first comment "
-        f"{data['facebook_publish']['comment_id']} were created by this execution. Meta authentication "
-        'is stored in an encrypted n8n credential and excluded from all repository artifacts.',
+        f"{data['facebook_publish']['comment_id']} were created by this execution. The non-expiring "
+        'Page token is stored in an encrypted n8n credential and excluded from all repository artifacts.',
         new_x=XPos.LMARGIN, new_y=YPos.NEXT,
     )
     pdf.set_y(box_y + 47)
