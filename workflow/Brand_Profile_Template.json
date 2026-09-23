@@ -1,0 +1,22 @@
+{
+  "brand_name": "YOUR_BRAND_NAME",
+  "focus_niche": "AI tools, automation workflows, software engineering, productivity systems",
+  "primary_audience": "Founders, developers, agency operators, automation engineers",
+  "primary_language": "Arabic",
+  "voice": "Direct, technical, practical, zero corporate fluff, value-focused",
+  "facebook_style": "High-impact hook, practical value bullets, source link in first comment",
+  "x_style": "Concise, single-idea focus, under 280 characters",
+  "posting_goal": "Deliver actionable technical insights daily while building authority",
+  "avoid_topics_csv": "generic productivity hacks, celebrity drama, speculative crypto, abstract AI hype",
+  "preferred_cta": "Reference link in first comment with an open technical question.",
+  "must_include_rules": [
+    "Start directly with tool name, update, or measurable metric",
+    "Write in natural, conversational Arabic",
+    "Focus on concrete utility rather than abstract speculation",
+    "Provide 3 to 5 scannable bullet points",
+    "Never place the external URL inside the main caption body",
+    "Avoid generic lines like 'Discover the revolutionary power of AI'"
+  ],
+  "auto_publish_facebook": true,
+  "direct_post_x": false
+}

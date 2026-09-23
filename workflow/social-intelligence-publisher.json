@@ -1,0 +1,551 @@
+{
+  "name": "Social Intelligence Publisher",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 10
+            },
+            {
+              "triggerAtHour": 18
+            }
+          ]
+        }
+      },
+      "id": "schedule-trigger",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "position": [
+        0,
+        240
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"brand_name\": \"AZAR\",\n  \"focus_niche\": \"أدوات الذكاء الاصطناعي العملية، أتمتة n8n، الووركفلو الجاهز، والأنظمة الرقمية المفيدة\",\n  \"primary_audience\": \"مؤسسون، فريلانسرز، أوبريترز، وناس تريد تستخدم AI بشكل عملي في الشغل\",\n  \"primary_language\": \"Arabic\",\n  \"voice\": \"عربي واضح، عملي، مباشر، مفيد، بدون تهويل أو فلسفة زيادة\",\n  \"facebook_style\": \"هوك قوي، قيمة عملية، تفاصيل سريعة، والرابط في أول تعليق\",\n  \"x_style\": \"مختصر، سريع، واضح، ومبني على فكرة واحدة\",\n  \"posting_goal\": \"نشر شيء محدد الناس تقدر تستفيد منه فوراً، مع بناء ثقة وصفحة تبدو خبيرة لا عامة\",\n  \"avoid_topics_csv\": \"اكتشف كيف يغير AI حياتك, chatgpt رهيب, top 10 ai tools, generic productivity hacks, inspirational fluff\",\n  \"preferred_cta\": \"اختم بإشارة قصيرة أن الرابط في أول تعليق أو بسؤال عملي صغير.\",\n  \"must_include_rules\": [\n    \"ابدأ باسم الأداة أو التحديث أو الرقم أو النتيجة مباشرة\",\n    \"اكتب بالعربية الطبيعية وليس إنجليزي تسويقي\",\n    \"ركز على فائدة عملية واضحة وليس كلام عام\",\n    \"أضف 3 إلى 5 نقاط سريعة سهلة المسح\",\n    \"لا تضع الرابط داخل نص المنشور، اكتبه في أول تعليق\",\n    \"امنع الجمل العامة مثل Discover how AI can revolutionize your work\"\n  ],\n  \"auto_publish_facebook\": true,\n  \"direct_post_x\": false\n}",
+        "options": {}
+      },
+      "id": "brand-profile",
+      "name": "Brand Profile & Rules",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        256,
+        240
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"angles\": [\n    \"إطلاق أداة أو تحديث يستحق التجربة\",\n    \"مورد مجاني أو مفتوح المصدر مفيد فعلاً\",\n    \"workflow جاهز يوفر وقتاً أو كوداً\",\n    \"حل مشكلة مزعجة في أدوات AI أو automation\",\n    \"شرح لماذا هذا الخبر مهم عملياً لأصحاب الشغل\",\n    \"فكرة تطبيق سريعة يمكن تنفيذها فوراً\"\n  ]\n}",
+        "options": {}
+      },
+      "id": "angle-library",
+      "name": "Angle Library",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        480,
+        240
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "url": "https://hn.algolia.com/api/v1/search?query=ai%20automation&tags=story&hitsPerPage=8",
+        "options": {}
+      },
+      "id": "fetch-hn-ai-automation",
+      "name": "Fetch HN AI Automation",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        800,
+        80
+      ],
+      "typeVersion": 4.2,
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 1500
+    },
+    {
+      "parameters": {
+        "url": "https://hn.algolia.com/api/v1/search?query=openai%20agents&tags=story&hitsPerPage=8",
+        "options": {}
+      },
+      "id": "fetch-hn-openai-agents",
+      "name": "Fetch HN OpenAI Agents",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        1024,
+        80
+      ],
+      "typeVersion": 4.2,
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 1500
+    },
+    {
+      "parameters": {
+        "url": "https://dev.to/api/articles?tag=ai&per_page=8",
+        "options": {}
+      },
+      "id": "fetch-devto-ai",
+      "name": "Fetch Dev.to AI",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        1248,
+        80
+      ],
+      "typeVersion": 4.2,
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 1500
+    },
+    {
+      "parameters": {
+        "jsCode": "const brand = $('Brand Profile & Rules').first().json;\nconst angles = $('Angle Library').first().json.angles || [];\n\nconst hnAutomationRaw = (($('Fetch HN AI Automation').first().json || {}).hits) || [];\nconst hnOpenAIRaw = (($('Fetch HN OpenAI Agents').first().json || {}).hits) || [];\nconst devtoRaw = $('Fetch Dev.to AI').all().map((item) => item.json);\n\nconst hnAutomation = Array.isArray(hnAutomationRaw) ? hnAutomationRaw : [];\nconst hnOpenAI = Array.isArray(hnOpenAIRaw) ? hnOpenAIRaw : [];\nconst devto = Array.isArray(devtoRaw) ? devtoRaw : (Array.isArray(devtoRaw?.result) ? devtoRaw.result : []);\n\nfunction keywordScore(text) {\n  const value = String(text || '').toLowerCase();\n  let score = 0;\n  const positives = ['agent', 'workflow', 'automation', 'openai', 'n8n', 'api', 'voice', 'assistant', 'operator', 'prompt', 'tool', 'model', 'deployment', 'integration', 'rag', 'open source', 'github', 'chrome', 'extension', 'free', 'template', 'course', 'launch', 'release'];\n  const negatives = ['meme', 'drama', 'leak', 'lawsuit', 'celebrity', 'nsfw', 'shitpost', 'funding round', 'hiring', 'opinion'];\n\n  for (const word of positives) if (value.includes(word)) score += 10;\n  for (const word of negatives) if (value.includes(word)) score -= 18;\n\n  if (/\\b\\d{1,3}\\b/.test(value)) score += 8;\n  if (value.includes('how to')) score += 8;\n  if (value.includes('vs')) score += 6;\n  if (value.includes('tutorial')) score += 9;\n  if (value.includes('case study')) score += 8;\n  if (value.includes('without code') || value.includes('no-code')) score += 10;\n  if (value.includes('ready')) score += 6;\n  if (value.includes('free')) score += 8;\n  if (value.includes('open source')) score += 10;\n\n  return score;\n}\n\nconst normalized = [];\n\nfor (const post of hnAutomation) {\n  normalized.push({\n    source: 'hackernews:ai-automation',\n    title: post.title || post.story_title || '',\n    url: post.url || post.story_url || '',\n    source_score: post.points || 0,\n    comments: post.num_comments || 0,\n    summary: post._highlightResult?.title?.value\n      ? String(post._highlightResult.title.value).replace(/<[^>]+>/g, '').slice(0, 240)\n      : '',\n  });\n}\n\nfor (const post of hnOpenAI) {\n  normalized.push({\n    source: 'hackernews:openai-agents',\n    title: post.title || post.story_title || '',\n    url: post.url || post.story_url || '',\n    source_score: post.points || 0,\n    comments: post.num_comments || 0,\n    summary: post._highlightResult?.title?.value\n      ? String(post._highlightResult.title.value).replace(/<[^>]+>/g, '').slice(0, 240)\n      : '',\n  });\n}\n\nfor (const article of devto) {\n  normalized.push({\n    source: 'dev.to:ai',\n    title: article.title || '',\n    url: article.url || '',\n    source_score: article.public_reactions_count || 0,\n    comments: article.comments_count || 0,\n    summary: article.description ? String(article.description).slice(0, 240) : '',\n  });\n}\n\nconst deduped = [];\nconst seen = new Set();\n\nfor (const item of normalized) {\n  const key = String(item.title || '').trim().toLowerCase();\n  if (!key || seen.has(key) || !String(item.url || '').trim()) continue;\n\n  seen.add(key);\n\n  const relevance = keywordScore(item.title + ' ' + item.summary);\n  const engagement = Math.min(Number(item.source_score || 0), 400) * 0.08 + Math.min(Number(item.comments || 0), 120) * 0.15;\n  const specificity = Math.min((String(item.title || '').split(' ').length || 0), 14) * 0.4;\n  const totalScore = Math.round((relevance + engagement + specificity) * 10) / 10;\n\n  deduped.push({\n    ...item,\n    relevance_score: relevance,\n    engagement_score: Math.round(engagement * 10) / 10,\n    specificity_score: Math.round(specificity * 10) / 10,\n    total_score: totalScore,\n    suggested_angles: angles.slice(0, 4),\n  });\n}\n\nconst filtered = deduped\n  .filter((item) => item.total_score >= 14)\n  .sort((a, b) => b.total_score - a.total_score)\n  .slice(0, 10);\n\nconst digest = filtered\n  .map((item, index) => [\n    `${index + 1}. ${item.title}`,\n    `source: ${item.source}`,\n    `score: ${item.total_score}`,\n    `url: ${item.url}`,\n    `summary: ${item.summary}`,\n  ].join('\\n'))\n  .join('\\n\\n');\n\nreturn [{\n  json: {\n    brand,\n    angles,\n    candidates: filtered,\n    candidate_digest: digest,\n    candidate_count: filtered.length,\n    source_debug: {\n      hnAutomationCount: hnAutomation.length,\n      hnOpenAICount: hnOpenAI.length,\n      devtoCount: devto.length,\n      devtoType: Array.isArray(devtoRaw) ? 'array' : typeof devtoRaw,\n    },\n  },\n}];"
+      },
+      "id": "normalize-score-topics",
+      "name": "Normalize & Score Topics",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        1472,
+        80
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://openrouter.ai/api/v1/chat/completions",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ ({ model: 'openai/gpt-4.1-mini', temperature: 0.2, max_tokens: 700, response_format: { type: 'json_schema', json_schema: { name: 'topic_selector_payload', schema: { type: 'object', additionalProperties: false, properties: { chosen_title: { type: 'string' }, chosen_source: { type: 'string' }, chosen_url: { type: 'string' }, chosen_angle: { type: 'string' }, why_this_topic: { type: 'string' }, facebook_goal: { type: 'string' }, x_goal: { type: 'string' }, proof_points: { type: 'array', items: { type: 'string' } } }, required: ['chosen_title', 'chosen_source', 'chosen_url', 'chosen_angle', 'why_this_topic', 'facebook_goal', 'x_goal', 'proof_points'] } } }, provider: { require_parameters: true }, messages: [ { role: 'system', content: 'You choose one highly specific social content topic for the AZAR page. Return valid JSON only. Choose exactly one candidate and preserve its title, source, and URL exactly. Choose topics that can become a practical Arabic Facebook post with a strong hook, concrete value, and a source link in the first comment. Reject generic trend topics and abstract AI inspiration.' }, { role: 'user', content: 'Brand profile:\\n' + JSON.stringify($json.brand || {}, null, 2) + '\\n\\nAngles:\\n' + JSON.stringify($json.angles || [], null, 2) + '\\n\\nCandidates:\\n' + ($json.candidate_digest || '') + '\\n\\nChoose the best candidate for a Facebook page that posts about tools, workflows, and useful AI updates. Prioritize: tool launches, free/open-source resources, ready workflows, updates that solve a real problem, and stories with a concrete payoff. Return only the required JSON.' } ] }) }}",
+        "options": {}
+      },
+      "id": "openai-topic-selector",
+      "name": "OpenAI Topic Selector",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        1472,
+        432
+      ],
+      "typeVersion": 4.2,
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 1500
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://openrouter.ai/api/v1/chat/completions",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ ({ model: 'openai/gpt-4.1-mini', temperature: 0.35, max_tokens: 1400, response_format: { type: 'json_schema', json_schema: { name: 'content_pack_payload', schema: { type: 'object', additionalProperties: false, properties: { topic: { type: 'string' }, angle: { type: 'string' }, hook_ar: { type: 'string' }, explainer_ar: { type: 'string' }, bullets_ar: { type: 'array', items: { type: 'string' } }, cta_ar: { type: 'string' }, facebook_post: { type: 'string' }, facebook_first_comment: { type: 'string' }, x_post: { type: 'string' }, hashtags: { type: 'array', items: { type: 'string' } }, image_prompt: { type: 'string' }, reuse_note: { type: 'string' }, status: { type: 'string' } }, required: ['topic', 'angle', 'hook_ar', 'explainer_ar', 'bullets_ar', 'cta_ar', 'facebook_post', 'facebook_first_comment', 'x_post', 'hashtags', 'image_prompt', 'reuse_note', 'status'] } } }, provider: { require_parameters: true }, messages: [ { role: 'system', content: 'You write Arabic social content for the AZAR Facebook page. Return valid JSON only. Write in clear Arabic. Sound practical, useful, and specific. Never sound like generic marketing. Start with the actual tool/update/result, not a vague promise. The Facebook post must feel like a real AI tools page post: concrete hook, short explanation, 3 to 5 scannable points, and end with a line saying the link is in the first comment. Keep the source link OUT of facebook_post and place it inside facebook_first_comment.' }, { role: 'user', content: 'Chosen topic JSON:\\n' + (($json.choices && $json.choices[0] && $json.choices[0].message && $json.choices[0].message.content) || '{}') + '\\n\\nCreate the final content pack now using these rules:\\n- Arabic only, except product names and technical terms if needed\\n- facebook_post: 70 to 130 words\\n- first line must be a hook tied to the actual tool/update\\n- bullets_ar: 3 to 5 short useful bullets\\n- facebook_post must end with: الرابط في أول تعليق 👇\\n- facebook_first_comment should contain one short line plus the source URL\\n- x_post: under 280 characters\\n- hashtags: 4 to 6 relevant tags, no spam\\n- image_prompt: visual idea for a clean square post card\\n- status: draft_ready\\n- absolutely avoid generic lines like Discover how AI can revolutionize your work\\nReturn JSON only.' } ] }) }}",
+        "options": {}
+      },
+      "id": "openai-content-pack",
+      "name": "OpenAI Content Pack",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        1248,
+        432
+      ],
+      "typeVersion": 4.2,
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 1500
+    },
+    {
+      "parameters": {
+        "jsCode": "const raw = $json.choices?.[0]?.message?.content || '{}';\nlet parsed;\ntry {\n  parsed = JSON.parse(raw);\n} catch (error) {\n  parsed = { topic: 'parse_failed', angle: 'unknown', hook_ar: '', explainer_ar: '', bullets_ar: [], cta_ar: '', facebook_post: raw, facebook_first_comment: '', x_post: '', hashtags: [], image_prompt: '', reuse_note: 'AI returned non-JSON content. Review manually.', status: 'needs_review' };\n}\n\nconst selectedRaw = $('OpenAI Topic Selector').first().json.choices?.[0]?.message?.content || '{}';\nlet selected = {};\ntry {\n  selected = JSON.parse(selectedRaw);\n} catch (error) {\n  selected = { chosen_title: '', chosen_source: '', chosen_url: '', proof_points: [] };\n}\n\nconst ranked = $('Normalize & Score Topics').first().json.candidates || [];\nconst matched = ranked.find((item) => item.url === selected.chosen_url) || ranked[0] || {};\n\nreturn [{ json: {\n  run_timestamp: new Date().toISOString(),\n  topic: parsed.topic || selected.chosen_title || matched.title || '',\n  angle: parsed.angle || selected.chosen_angle || '',\n  source: matched.source || selected.chosen_source || '',\n  source_url: matched.url || selected.chosen_url || '',\n  source_score: matched.total_score ?? null,\n  why_this_topic: selected.why_this_topic || '',\n  proof_points: selected.proof_points || [],\n  hook_ar: parsed.hook_ar || '',\n  explainer_ar: parsed.explainer_ar || '',\n  bullets_ar: parsed.bullets_ar || [],\n  cta_ar: parsed.cta_ar || '',\n  facebook_post: parsed.facebook_post || '',\n  facebook_first_comment: parsed.facebook_first_comment || ('المصدر:\\n' + (matched.url || selected.chosen_url || '')),\n  x_post: parsed.x_post || '',\n  hashtags: parsed.hashtags || [],\n  image_prompt: parsed.image_prompt || '',\n  reuse_note: parsed.reuse_note || '',\n  status: parsed.status || 'draft_ready',\n  platform_mode: { facebook: 'ready_for_api_publish_plus_comment', x: 'ready_for_manual_publish' }\n}}];"
+      },
+      "id": "parse-draft-pack",
+      "name": "Parse Draft Pack",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        1024,
+        432
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{ json: { ...$input.first().json } }];"
+      },
+      "id": "final-draft-output",
+      "name": "Final Draft Output",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        800,
+        432
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "url": "https://graph.facebook.com/v25.0/me/accounts?fields=id%2Cname%2Caccess_token%2Ctasks",
+        "options": {}
+      },
+      "id": "resolve-facebook-pages",
+      "name": "Resolve Facebook Pages",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        800,
+        784
+      ],
+      "typeVersion": 4.2,
+      "disabled": true,
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 1500
+    },
+    {
+      "parameters": {
+        "jsCode": "const response = $json || {};\nconst draft = $('Final Draft Output').first().json || {};\nconst pageNameTarget = 'AZAR';\nconst pageIdTarget = '177929742707287';\n\nconst pages = Array.isArray(response.data) ? response.data : [];\nconst page = pages.find((item) => String(item.id || '') === pageIdTarget)\n  || pages.find((item) => String(item.name || '').trim().toLowerCase() === pageNameTarget.toLowerCase())\n  || {};\n\nif (!page.id) {\n  throw new Error('The configured Facebook Page was not returned by Meta.');\n}\nif (!page.access_token) {\n  throw new Error('Meta did not return a Page access token. Check the n8n Meta credential and Page permissions.');\n}\n\nreturn [{ json: {\n  ...draft,\n  page_id: page.id,\n  page_name: page.name || pageNameTarget,\n  page_access_token: page.access_token,\n  page_tasks: page.tasks || [],\n  publish_message: draft.facebook_post || '',\n  publish_mode: 'facebook_page_feed'\n} }];"
+      },
+      "id": "prepare-facebook-post",
+      "name": "Prepare Facebook Post",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        1024,
+        784
+      ],
+      "typeVersion": 2,
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ 'https://graph.facebook.com/v25.0/' + $json.page_id + '/feed' }}",
+        "sendBody": true,
+        "contentType": "form-urlencoded",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "message",
+              "value": "={{$json.publish_message || \"\"}}"
+            },
+            {
+              "name": "access_token",
+              "value": "={{$json.page_access_token || \"\"}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "post-to-facebook-page",
+      "name": "Post to Facebook Page",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        1248,
+        784
+      ],
+      "typeVersion": 4.2,
+      "disabled": true,
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 1500
+    },
+    {
+      "parameters": {
+        "jsCode": "const commentResult = $json || {};\nconst postResult = $('Post to Facebook Page').first().json || {};\nconst draft = $('Prepare Facebook Post').first().json || {};\nreturn [{ json: {\n  ...draft,\n  facebook_publish_response: postResult,\n  facebook_comment_response: commentResult,\n  facebook_publish_status: postResult.id ? 'published' : 'unknown',\n  facebook_comment_status: commentResult.id ? 'comment_published' : 'comment_skipped_or_failed'\n}}];"
+      },
+      "id": "facebook-publish-result",
+      "name": "Facebook Publish Result",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        1920,
+        784
+      ],
+      "typeVersion": 2,
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const postResult = $('Post to Facebook Page').first().json || {};\nconst draft = $('Prepare Facebook Post').first().json || {};\nconst postId = postResult.id || '';\nconst fallback = draft.source_url ? ('المصدر:\n' + draft.source_url) : '';\nreturn [{ json: { ...draft, facebook_post_id: postId, facebook_first_comment: draft.facebook_first_comment || fallback } }];"
+      },
+      "id": "prepare-facebook-first-comment",
+      "name": "Prepare Facebook First Comment",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        1472,
+        784
+      ],
+      "typeVersion": 2,
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ 'https://graph.facebook.com/v25.0/' + $json.facebook_post_id + '/comments' }}",
+        "sendBody": true,
+        "contentType": "form-urlencoded",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "message",
+              "value": "={{$json.facebook_first_comment || \"\"}}"
+            },
+            {
+              "name": "access_token",
+              "value": "={{$json.page_access_token || \"\"}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "post-facebook-first-comment",
+      "name": "Post Facebook First Comment",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        1696,
+        784
+      ],
+      "typeVersion": 4.2,
+      "disabled": true,
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 1500
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Brand Profile & Rules",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Brand Profile & Rules": {
+      "main": [
+        [
+          {
+            "node": "Angle Library",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Angle Library": {
+      "main": [
+        [
+          {
+            "node": "Fetch HN AI Automation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch HN AI Automation": {
+      "main": [
+        [
+          {
+            "node": "Fetch HN OpenAI Agents",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch HN OpenAI Agents": {
+      "main": [
+        [
+          {
+            "node": "Fetch Dev.to AI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Dev.to AI": {
+      "main": [
+        [
+          {
+            "node": "Normalize & Score Topics",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize & Score Topics": {
+      "main": [
+        [
+          {
+            "node": "OpenAI Topic Selector",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Topic Selector": {
+      "main": [
+        [
+          {
+            "node": "OpenAI Content Pack",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Content Pack": {
+      "main": [
+        [
+          {
+            "node": "Parse Draft Pack",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Draft Pack": {
+      "main": [
+        [
+          {
+            "node": "Final Draft Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Final Draft Output": {
+      "main": [
+        [
+          {
+            "node": "Resolve Facebook Pages",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Resolve Facebook Pages": {
+      "main": [
+        [
+          {
+            "node": "Prepare Facebook Post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Facebook Post": {
+      "main": [
+        [
+          {
+            "node": "Post to Facebook Page",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Post to Facebook Page": {
+      "main": [
+        [
+          {
+            "node": "Prepare Facebook First Comment",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Facebook First Comment": {
+      "main": [
+        [
+          {
+            "node": "Post Facebook First Comment",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Post Facebook First Comment": {
+      "main": [
+        [
+          {
+            "node": "Facebook Publish Result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "availableInMCP": true,
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "saveManualExecutions": true,
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "executionTimeout": 240
+  },
+  "nodeGroups": [
+    {
+      "id": "7b3aa061-8ee3-4ac5-bdd2-19edf7157797",
+      "name": "01 / Control",
+      "nodeNames": [
+        "Brand Profile & Rules",
+        "Angle Library"
+      ]
+    },
+    {
+      "id": "9c47c8d6-b242-464d-a015-c8037a9210b7",
+      "name": "02 / Discover",
+      "nodeNames": [
+        "Fetch HN AI Automation",
+        "Fetch HN OpenAI Agents",
+        "Fetch Dev.to AI",
+        "Normalize & Score Topics"
+      ]
+    },
+    {
+      "id": "44a7694e-7d73-4987-b938-3ee45aa0644d",
+      "name": "03 / Compose",
+      "nodeNames": [
+        "OpenAI Topic Selector",
+        "OpenAI Content Pack",
+        "Parse Draft Pack",
+        "Final Draft Output"
+      ]
+    },
+    {
+      "id": "2f06e5ff-6497-436a-9970-33e92f8a51a7",
+      "name": "04 / Release",
+      "nodeNames": [
+        "Resolve Facebook Pages",
+        "Prepare Facebook Post",
+        "Post to Facebook Page",
+        "Prepare Facebook First Comment",
+        "Post Facebook First Comment",
+        "Facebook Publish Result"
+      ]
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false
+  }
+}
