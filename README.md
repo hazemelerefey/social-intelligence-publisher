@@ -21,20 +21,20 @@ The repository contains evidence from a real local n8n execution on 23 September
 
 | Check | Result |
 | --- | --- |
-| Execution ID | `3` |
+| Execution ID | `5` |
 | Status | `success` |
-| Duration | 15.776 seconds |
+| Duration | 17.122 seconds |
 | Live inputs | 8 HN automation + 8 HN agents + 8 Dev.to articles |
 | Ranked candidates | 10 |
 | AI model | `openai/gpt-4.1-mini` through OpenRouter |
-| Measured AI cost | `$0.0021388` |
+| Measured AI cost | `$0.0021144` |
 | Final draft | `draft_ready` |
-| Meta publication | Pending rotated Meta credential; Release nodes disabled during the verified run |
+| Meta publication | Verified: AZAR Page post and first source comment published |
 
 - [Execution evidence](docs/execution-evidence.json)
 - [Verification report](docs/social-intelligence-publisher-report.pdf)
 
-The evidence is explicit about scope: ingestion, scoring, AI generation, parsing, and final draft output are verified. Facebook publication is not represented as verified until the rotated Meta credential is connected and a real post/comment execution succeeds.
+The evidence covers the complete path: ingestion, scoring, AI generation, parsing, Meta Page publication, and the source-linked first comment.
 
 ## Architecture
 
@@ -49,15 +49,15 @@ The schedule trigger sits before four compact stages arranged as a readable serp
 
 ## Real generated output
 
-Execution `3` selected the ranked n8n candidate from Hacker News and produced this Facebook draft:
+Execution `5` selected the ranked n8n candidate from Hacker News, published it to the AZAR Page, and added the source as the first comment:
 
-> وفر ساعات من العمل الروتيني مع n8n، أداة أتمتة مفتوحة المصدر بدون تعقيد برمجي. n8n تتيح لك بناء ووركفلو ذكي بدون الحاجة لكتابة كود معقد، مما يسرّع تنفيذ المهام اليومية ويوفر وقتك للتركيز على الإبداع.
+> هل تبحث عن أتمتة ووركفلو بدون تعقيد برمجي؟ n8n توفر لك الحل! هذه الأداة المفتوحة المصدر تتيح للفرق التقنية وأصحاب المشاريع أتمتة المهام اليومية بسهولة، مع دعم للذكاء الاصطناعي وربط سلس مع أدوات متعددة.
 >
-> - مفتوحة المصدر مع دعم مجتمع نشط ومتجدد
-> - دمج سهل مع أدوات AI وأتمتة متقدمة
-> - إنشاء ووركفلو بدون كود مع خيارات تخصيص واسعة
-> - توفير وقت وجهد في العمليات الروتينية اليومية
-> - مثالية للفريلانسرز والمؤسسين والفرق التقنية
+> - أتمتة بدون كود مع دعم AI
+> - ربط أكثر من 200 تطبيق
+> - توفير وقت وجهد في المهام المتكررة
+> - مناسبة للمؤسسين والفريلانسرز
+> - مجتمع نشط يدعم التطوير
 >
 > الرابط في أول تعليق 👇
 
@@ -74,7 +74,7 @@ The generated first comment points to the selected source: `https://n8n.io/`.
    - Name: `access_token`
    - Value: the rotated Meta user token with the required Page permissions
 5. Assign it to `Resolve Facebook Pages` and confirm the Page ID in `Prepare Facebook Post`.
-6. Enable the six Release nodes, run a manual validation, and only then publish the schedule.
+6. Confirm the six Release nodes are enabled, run a manual validation, and only then publish the schedule.
 
 Never place API keys or Meta tokens directly in node URLs, code, exported JSON, screenshots, or Git history.
 
@@ -86,7 +86,7 @@ Never place API keys or Meta tokens directly in node URLs, code, exported JSON, 
 - Structured JSON schemas for both AI responses.
 - Deterministic candidate ranking before model use.
 - Execution timeout and success/error retention enabled.
-- Release stage kept disabled until Meta authentication is verified.
+- Release stage uses an encrypted Meta Query Auth credential; the credential itself is never exported.
 
 ## Repository map
 

@@ -102,14 +102,14 @@ def build():
     pdf.set_x(14)
     pdf.set_font('DejaVu', '', 8.5)
     pdf.set_text_color(203, 213, 225)
-    pdf.cell(0, 6, 'Generated from n8n execution ID 3  |  23 September 2026', new_x=XPos.LMARGIN, new_y=YPos.NEXT)
+    pdf.cell(0, 6, 'Generated from n8n execution ID 5  |  23 September 2026', new_x=XPos.LMARGIN, new_y=YPos.NEXT)
 
     pdf.set_y(94)
     pdf.section('Verified outcome')
     pdf.paragraph(
         'The workflow completed a real manual execution using live Hacker News and Dev.to data, '
         'deterministic scoring, and two OpenRouter requests. The final Arabic content pack was '
-        'parsed successfully and marked draft_ready.'
+        'published to the AZAR Facebook Page with its source URL in the first comment.'
     )
     y = pdf.get_y() + 7
     pdf.metric(10, y, 43, 'STATUS', execution['status'].upper())
@@ -118,23 +118,23 @@ def build():
     pdf.metric(151, y, 49, 'AI COST', f"${data['ai']['total_cost_usd']:.7f}")
     pdf.set_y(y + 29)
 
-    pdf.section('Verification boundary')
-    pdf.set_fill_color(255, 247, 237)
-    pdf.set_draw_color(253, 186, 116)
+    pdf.section('Meta publication evidence')
+    pdf.set_fill_color(240, 253, 250)
+    pdf.set_draw_color(45, 212, 191)
     box_y = pdf.get_y()
     pdf.rect(10, box_y, 190, 39, 'DF')
     pdf.set_xy(15, box_y + 5)
     pdf.set_font('DejaVu', 'B', 8.5)
-    pdf.set_text_color(*AMBER)
-    pdf.cell(0, 5, 'META RELEASE STAGE: NOT YET VERIFIED', new_x=XPos.LMARGIN, new_y=YPos.NEXT)
+    pdf.set_text_color(*TEAL)
+    pdf.cell(0, 5, 'META RELEASE STAGE: VERIFIED', new_x=XPos.LMARGIN, new_y=YPos.NEXT)
     pdf.set_x(15)
     pdf.set_font('DejaVu', '', 8)
     pdf.set_text_color(*SLATE)
     pdf.multi_cell(
         180, 4.5,
-        'The six Facebook release nodes were disabled during this run while the exposed token is '
-        'rotated and replaced with an n8n credential. No Facebook post or comment is claimed as '
-        'published in this report.',
+        f"AZAR Page post {data['facebook_publish']['post_id']} and first comment "
+        f"{data['facebook_publish']['comment_id']} were created by this execution. Meta authentication "
+        'is stored in an encrypted n8n credential and excluded from all repository artifacts.',
         new_x=XPos.LMARGIN, new_y=YPos.NEXT,
     )
     pdf.set_y(box_y + 47)
@@ -238,7 +238,7 @@ def build():
     # Verification page
     pdf.add_page()
     pdf.section('04  /  Node-level execution audit')
-    pdf.paragraph('Every node appears in the saved n8n execution. Disabled release nodes passed data through and are marked clearly below.')
+    pdf.paragraph('Every node appears in the saved successful n8n execution, including the six active Facebook release nodes.')
     pdf.ln(2)
     pdf.set_font('DejaVu', 'B', 7.2)
     pdf.set_fill_color(*NAVY)

@@ -192,7 +192,9 @@
     {
       "parameters": {
         "url": "https://graph.facebook.com/v25.0/me/accounts?fields=id%2Cname%2Caccess_token%2Ctasks",
-        "options": {}
+        "options": {},
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpQueryAuth"
       },
       "id": "resolve-facebook-pages",
       "name": "Resolve Facebook Pages",
@@ -202,7 +204,7 @@
         784
       ],
       "typeVersion": 4.2,
-      "disabled": true,
+      "disabled": false,
       "retryOnFail": true,
       "maxTries": 3,
       "waitBetweenTries": 1500
@@ -219,7 +221,7 @@
         784
       ],
       "typeVersion": 2,
-      "disabled": true
+      "disabled": false
     },
     {
       "parameters": {
@@ -249,7 +251,7 @@
         784
       ],
       "typeVersion": 4.2,
-      "disabled": true,
+      "disabled": false,
       "retryOnFail": true,
       "maxTries": 3,
       "waitBetweenTries": 1500
@@ -266,11 +268,11 @@
         784
       ],
       "typeVersion": 2,
-      "disabled": true
+      "disabled": false
     },
     {
       "parameters": {
-        "jsCode": "const postResult = $('Post to Facebook Page').first().json || {};\nconst draft = $('Prepare Facebook Post').first().json || {};\nconst postId = postResult.id || '';\nconst fallback = draft.source_url ? ('المصدر:\n' + draft.source_url) : '';\nreturn [{ json: { ...draft, facebook_post_id: postId, facebook_first_comment: draft.facebook_first_comment || fallback } }];"
+        "jsCode": "const postResult = $('Post to Facebook Page').first().json || {};\nconst draft = $('Prepare Facebook Post').first().json || {};\nconst postId = postResult.id || '';\nconst fallback = draft.source_url ? ('المصدر:\\n' + draft.source_url) : '';\nreturn [{ json: { ...draft, facebook_post_id: postId, facebook_first_comment: draft.facebook_first_comment || fallback } }];"
       },
       "id": "prepare-facebook-first-comment",
       "name": "Prepare Facebook First Comment",
@@ -280,7 +282,7 @@
         784
       ],
       "typeVersion": 2,
-      "disabled": true
+      "disabled": false
     },
     {
       "parameters": {
@@ -310,7 +312,7 @@
         784
       ],
       "typeVersion": 4.2,
-      "disabled": true,
+      "disabled": false,
       "retryOnFail": true,
       "maxTries": 3,
       "waitBetweenTries": 1500
@@ -507,41 +509,41 @@
     {
       "id": "7b3aa061-8ee3-4ac5-bdd2-19edf7157797",
       "name": "01 / Control",
-      "nodeNames": [
-        "Brand Profile & Rules",
-        "Angle Library"
+      "nodeIds": [
+        "brand-profile",
+        "angle-library"
       ]
     },
     {
       "id": "9c47c8d6-b242-464d-a015-c8037a9210b7",
       "name": "02 / Discover",
-      "nodeNames": [
-        "Fetch HN AI Automation",
-        "Fetch HN OpenAI Agents",
-        "Fetch Dev.to AI",
-        "Normalize & Score Topics"
+      "nodeIds": [
+        "fetch-hn-ai-automation",
+        "fetch-hn-openai-agents",
+        "fetch-devto-ai",
+        "normalize-score-topics"
       ]
     },
     {
       "id": "44a7694e-7d73-4987-b938-3ee45aa0644d",
       "name": "03 / Compose",
-      "nodeNames": [
-        "OpenAI Topic Selector",
-        "OpenAI Content Pack",
-        "Parse Draft Pack",
-        "Final Draft Output"
+      "nodeIds": [
+        "openai-topic-selector",
+        "openai-content-pack",
+        "parse-draft-pack",
+        "final-draft-output"
       ]
     },
     {
       "id": "2f06e5ff-6497-436a-9970-33e92f8a51a7",
       "name": "04 / Release",
-      "nodeNames": [
-        "Resolve Facebook Pages",
-        "Prepare Facebook Post",
-        "Post to Facebook Page",
-        "Prepare Facebook First Comment",
-        "Post Facebook First Comment",
-        "Facebook Publish Result"
+      "nodeIds": [
+        "resolve-facebook-pages",
+        "prepare-facebook-post",
+        "post-to-facebook-page",
+        "prepare-facebook-first-comment",
+        "post-facebook-first-comment",
+        "facebook-publish-result"
       ]
     }
   ],
